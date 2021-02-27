@@ -2,7 +2,6 @@ FROM alpine:3.13.2 AS install
 WORKDIR /app
 RUN apk add --no-cache unbound drill ; \
     mkdir config ; \
-    mkdir config/conf.d ; \
     mkdir data ; \
     rm /etc/unbound/root.hints ; \
     rm /etc/unbound/unbound.conf
@@ -30,7 +29,8 @@ EXPOSE 53/UDP
 
 ENV HEALTHCHECK_PORT=53
 ENV HEALTHCHECK_URL="docker.com"
+ENV HEALTHCHECK_ENABLED=False
 
 # HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "./healthcheck.sh" ]
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["unbound", "-v"]
+CMD ["unbound"]
