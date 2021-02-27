@@ -1,11 +1,23 @@
 FROM alpine:3.13.2 AS install
-RUN apk add --no-cache unbound drill
+WORKDIR /app
+RUN apk add --no-cache unbound drill ; \
+    mkdir config ; \
+    mkdir config/conf.d ; \
+    mkdir data ; \
+    rm /etc/unbound/root.hints ; \
+    rm /etc/unbound/unbound.conf
+ADD https://www.internic.net/domain/named.root ./data/root.hints
 
 FROM install AS copy
 WORKDIR /app
-COPY . .
-ADD https://www.internic.net/domain/named.root ./data/root.hints
-RUN chmod +x ./entrypoint.sh ; chmod +x ./healthcheck.sh
+COPY entrypoint.sh .
+COPY healthcheck.sh .
+COPY unbound.conf ./config/
+RUN chmod +x ./entrypoint.sh ; \
+    chmod +x ./healthcheck.sh ; \
+    chown unbound ./data/root.hints ; \
+    ln ./data/root.hints /etc/unbound/root.hints ; \
+    ln ./config/unbound.conf /etc/unbound/unbound.conf
 
 FROM copy
 LABEL org.label-schema.name="unbound"
