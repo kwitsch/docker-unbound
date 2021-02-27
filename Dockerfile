@@ -5,6 +5,7 @@ FROM install AS copy
 WORKDIR /app
 COPY . .
 ADD https://www.internic.net/domain/named.root ./data/root.hints
+RUN chmod +x ./entrypoint.sh ; chmod +x ./healthcheck.sh
 
 FROM copy
 LABEL org.label-schema.name="unbound"
