@@ -31,6 +31,6 @@ EXPOSE 53/UDP
 ENV HEALTHCHECK_PORT=53
 ENV HEALTHCHECK_URL="docker.com"
 
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "./healthcheck.sh" ]
+# HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "./healthcheck.sh" ]
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["unbound", "-v"]
