@@ -1,4 +1,4 @@
-FROM alpine:3.13.2 AS build
+FROM alpine:3.12.4 AS build
 WORKDIR /app
 RUN apk add --no-cache unbound drill ; \
     mkdir config ; \

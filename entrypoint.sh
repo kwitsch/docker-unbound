@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 if [ "$1" = 'unbound' ]; then
+    date
     echo "-- Replace data"
     cp ./data/root.key.new ./data/root.key
     cp ./data/root.hints.new ./data/root.hints
