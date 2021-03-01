@@ -6,10 +6,6 @@ if [ "$1" = 'unbound' ]; then
     cp ./data/root.hints.new ./data/root.hints
     echo "-----------------"
 
-    echo "-- Set nameserver"
-    echo "nameserver 127.0.0.1" > /etc/resolv.conf
-    echo "-----------------"
-
     echo "-- Set permissions"
     chown unbound ./data -R
     chgrp unbound ./data -R
