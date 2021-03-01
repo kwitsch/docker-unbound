@@ -1,11 +1,11 @@
 #!/bin/sh -e
 
 if [ "$1" = 'unbound' ]; then
-    echo "-- Get root.hints"
+    echo "-- Get root.hints from https://www.internic.net/domain/named.root"
     curl https://www.internic.net/domain/named.root > ./data/root.hints
     echo "-----------------"
 
-    echo "-- Get root.key"
+    echo "-- Verify anchor(root.key)"
     unbound-anchor -4 -v -a ./data/root.key
     echo "-----------------"
 
