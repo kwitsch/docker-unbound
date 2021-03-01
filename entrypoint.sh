@@ -2,7 +2,7 @@
 
 if [ "$1" = 'unbound' ]; then
     echo "-- Get root.hints"
-    curl https://www.internic.net/domain/named.root --output /app/data/root.hints
+    curl --resolve www.internic.com:443:"$BOOTSTRAP_DNS" https://www.internic.net/domain/named.root --output /app/data/root.hints
     echo "-----------------"
 
     echo "-- Get root.key"
