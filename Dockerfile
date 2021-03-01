@@ -5,9 +5,8 @@ RUN apk add --no-cache unbound drill ; \
     mkdir data ; \
     rm /etc/unbound/root.hints ; \
     rm /etc/unbound/unbound.conf ; \
-    cp /usr/share/dnssec-root/trusted-key.key ./data/root.key.new ; \
-    unbound-anchor -4 -v -a /app/data/root.key.new
-ADD https://www.internic.net/domain/named.root ./data/root.hints.new
+    cp /usr/share/dnssec-root/trusted-key.key ./data/root.key
+
 COPY *.sh .
 COPY *.conf ./config/
 RUN chmod +x ./entrypoint.sh ; \
