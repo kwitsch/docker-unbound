@@ -1,1 +1,1 @@
-drill -p "$HEALTHCHECK_PORT" "$HEALTHCHECK_URL" @127.0.0.1 || exit 1
+drill -p "$(unbound-checkconf -o port)" "$HEALTHCHECK_URL" @127.0.0.1 || exit 1
