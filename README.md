@@ -4,7 +4,7 @@
 - Alpine 3.12.4 based
 - apks added: unbound & drill
 - only using itself as dns resolver
-- bootstrap process for downloading the current root.hints form internic and verifying the anchor at first container start
+- bootstrap process for downloading the current root.hints form internic and verifying the anchor at first start
 - unbound config for recusive resolving
 
 ## Folders
