@@ -3,6 +3,7 @@ name: monthly autobuild
 on:
   schedule:
     - cron:  '1 1 1 * *'
+  workflow_dispatch:
 
 
 jobs:
@@ -22,6 +23,12 @@ jobs:
         with:
           repository: kwitsch/docker-unbound
           ref: ${{ steps.gettag.outputs.tag }}
+      
+      - name: Generate Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v1
+        with:
+          images: kwitsch/unbound
           
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -50,6 +57,7 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
           push: true
           tags: kwitsch/unbound:monthly
+          labels: ${{ steps.docker_meta.outputs.labels }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       
