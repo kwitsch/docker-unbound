@@ -14,16 +14,12 @@ COPY *.sh .
 ADD https://www.internic.net/domain/named.root ./data/root.hints
 RUN chmod +x entrypoint.sh ; \
     chmod +x healthcheck.sh ; \
-    ln ./config/unbound.conf /etc/unbound/unbound.conf ; \
     chown unbound ./data -R ; \
-    chgrp unbound ./data -R
+    chgrp unbound ./data -R ; \
+    ln ./config/unbound.conf /etc/unbound/unbound.conf
+    
 
 FROM copy
-LABEL org.label-schema.name="unbound"
-LABEL org.label-schema.vendor="kwitsch"
-LABEL org.label-schema.vcs-url="https://github.com/kwitsch/docker-unbound"
-LABEL org.label-schema.rkt.params="HEALTHCHECK_URL=string url for healtcheck(Default: internic.net)"
-
 EXPOSE 53/TCP
 EXPOSE 53/UDP
 
