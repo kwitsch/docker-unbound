@@ -5,14 +5,18 @@ RUN apk add --no-cache unbound drill ; \
     mkdir data ; \
     mkdir config ; \
     mkdir config/conf.d ; \
-    mv /etc/unbound/root.hints ./data/bootstrap.hints; \
-    mv /usr/share/dnssec-root/trusted-key.key ./data/root.key
+    mv /usr/share/dnssec-root/trusted-key.key ./data/root.key ; \
+    unbound-anchor -4 -v -a ./data/root.key
 
 FROM prepare AS copy
-COPY . .
+COPY *.conf ./config/
+COPY *.sh .
+ADD https://www.internic.net/domain/named.root ./data/root.hints
 RUN chmod +x entrypoint.sh ; \
     chmod +x healthcheck.sh ; \
-    mv *.conf config/
+    ln ./config/unbound.conf /etc/unbound/unbound.conf ; \
+    chown unbound ./data -R ; \
+    chgrp unbound ./data -R
 
 FROM copy
 LABEL org.label-schema.name="unbound"
